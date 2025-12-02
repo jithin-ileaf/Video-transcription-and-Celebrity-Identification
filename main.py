@@ -55,7 +55,7 @@ def identify_celebrity(face_image, embeddings_file=EMBEDDINGS_FILE):
 # -----------------------------
 # GEMINI TRANSCRIPTION FUNCTION
 # -----------------------------
-def transcribe_audio_gemini(audio_path, model="models/gemini-2.5-pro"):
+def transcribe_audio_gemini(audio_path, model="models/gemini-2.5-flash"):
     """Transcribe audio using Gemini 1.5"""
 
     model_obj = genai.GenerativeModel(model)
@@ -191,6 +191,7 @@ if st.session_state.video_uploaded and st.button("Transcribe Video"):
 if st.session_state.transcription:
     st.subheader("Transcribed Text:")
     st.write(st.session_state.transcription)
+
 
 
 
