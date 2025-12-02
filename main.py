@@ -12,7 +12,7 @@ import google.generativeai as genai
 # Load environment variables
 # -----------------------------
 load_dotenv()
-api_key = st.secrets["general"]["OPENAI_API_KEY"]
+api_key = st.secrets["general"]["GOOGLE_API_KEY_ILEAF"]
 genai.configure(api_key=api_key)
 
 # -----------------------------
@@ -190,4 +190,5 @@ if st.session_state.video_uploaded and st.button("Transcribe Video"):
 if st.session_state.transcription:
     st.subheader("Transcribed Text:")
     st.write(st.session_state.transcription)
+
 
