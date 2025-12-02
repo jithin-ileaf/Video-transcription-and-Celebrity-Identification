@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import cv2
 import ffmpeg
+import imageio_ffmpeg as iio_ffmpeg
 import streamlit as st
 from deepface import DeepFace
 from dotenv import load_dotenv
@@ -20,7 +21,7 @@ genai.configure(api_key=api_key)
 # -----------------------------
 EMBEDDINGS_FILE = "celebrity_embeddings_artists.pkl"
 FRAME_SKIP = 2  # Process every 2nd frame
-
+ffmpeg_path = iio_ffmpeg.get_ffmpeg_exe()
 # -----------------------------
 # Helper Functions
 # -----------------------------
@@ -176,7 +177,7 @@ if st.session_state.celebrity:
 if st.session_state.video_uploaded and st.button("Transcribe Video"):
     try:
         output_audio = "temp_audio.mp3"
-        ffmpeg.input(st.session_state.video_path).output(output_audio).run(overwrite_output=True, quiet=True)
+        ffmpeg.input(input_file).output(output_file).run(cmd=ffmpeg_path, overwrite_output=True)
 
         transcription = transcribe_audio_gemini(output_audio)
         st.session_state.transcription = transcription
@@ -190,6 +191,7 @@ if st.session_state.video_uploaded and st.button("Transcribe Video"):
 if st.session_state.transcription:
     st.subheader("Transcribed Text:")
     st.write(st.session_state.transcription)
+
 
 
 
