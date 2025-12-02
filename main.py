@@ -12,7 +12,8 @@ import google.generativeai as genai
 # Load environment variables
 # -----------------------------
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY_ILEAF"))
+api_key = st.secrets["general"]["OPENAI_API_KEY"]
+genai.configure(api_key=api_key)
 
 # -----------------------------
 # Constants
@@ -156,6 +157,7 @@ if st.session_state.video_uploaded and st.button("Identify Celebrity in Video"):
         celebrity = process_video(st.session_state.video_path)
         if celebrity:
             st.session_state.celebrity = celebrity
+            celebrity = celebrity.replace("_"," ")
             st.success(f"Celebrity detected: {celebrity}")
         else:
             st.warning("No celebrity face detected.")
@@ -188,3 +190,4 @@ if st.session_state.video_uploaded and st.button("Transcribe Video"):
 if st.session_state.transcription:
     st.subheader("Transcribed Text:")
     st.write(st.session_state.transcription)
+
