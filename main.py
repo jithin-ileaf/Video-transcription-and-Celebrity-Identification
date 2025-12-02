@@ -8,7 +8,7 @@ import streamlit as st
 from deepface import DeepFace
 from dotenv import load_dotenv
 import google.generativeai as genai
-import tempfile
+
 # -----------------------------
 # Load environment variables
 # -----------------------------
@@ -176,19 +176,13 @@ if st.session_state.celebrity:
 # -----------------------------
 if st.session_state.video_uploaded and st.button("Transcribe Video"):
     try:
-        # Create a temporary file for audio
-        with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp_audio:
-            output_audio = tmp_audio.name
+        output_audio = "temp_audio.mp3"
+        ffmpeg.input(st.session_state.video_path).output(output_audio).run(cmd=ffmpeg_path, overwrite_output=True,quiet=True)
 
-        # Extract audio
-        ffmpeg.input(st.session_state.video_path).output(output_audio).run(overwrite_output=True, quiet=True)
-
-        # Transcribe
         transcription = transcribe_audio_gemini(output_audio)
         st.session_state.transcription = transcription
 
         st.success("Transcription complete using Gemini!")
-
     except Exception as e:
         st.error(f"Transcription failed: {e}")
 
