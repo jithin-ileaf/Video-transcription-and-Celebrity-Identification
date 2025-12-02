@@ -177,7 +177,7 @@ if st.session_state.celebrity:
 if st.session_state.video_uploaded and st.button("Transcribe Video"):
     try:
         output_audio = "temp_audio.mp3"
-        ffmpeg.input(st.session_state.video_path).output(output_file).run(cmd=ffmpeg_path, overwrite_output=True)
+        ffmpeg.input(st.session_state.video_path).output(output_audio).run(cmd=ffmpeg_path, overwrite_output=True,quiet=True)
 
         transcription = transcribe_audio_gemini(output_audio)
         st.session_state.transcription = transcription
@@ -191,6 +191,7 @@ if st.session_state.video_uploaded and st.button("Transcribe Video"):
 if st.session_state.transcription:
     st.subheader("Transcribed Text:")
     st.write(st.session_state.transcription)
+
 
 
 
