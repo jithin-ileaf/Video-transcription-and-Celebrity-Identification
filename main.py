@@ -20,7 +20,7 @@ genai.configure(api_key=api_key)
 # Constants
 # -----------------------------
 EMBEDDINGS_FILE = "celebrity_embeddings_artists.pkl"
-FRAME_SKIP = 2  # Process every 2nd frame
+FRAME_SKIP = 30  # Process every 2nd frame
 ffmpeg_path = iio_ffmpeg.get_ffmpeg_exe()
 # -----------------------------
 # Helper Functions
