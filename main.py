@@ -71,7 +71,7 @@ def transcribe_audio_gemini(audio_path, model="models/gemini-2.5-flash"):
                 "mime_type": "audio/mp3",
                 "data": audio_bytes
             },
-            "Transcribe this audio exactly as spoken."
+            "Transcribe this audio exactly as spoken. Maintain consistent formattings for words."
         ]
     )
 
