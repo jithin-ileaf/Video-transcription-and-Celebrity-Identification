@@ -124,8 +124,8 @@ def process_video(video_path):
 # -----------------------------
 # Streamlit App UI
 # -----------------------------
-st.title("Video Processing: Celebrity Recognition + Transcription (Gemini)")
-st.write("Upload a video to identify celebrity faces or transcribe audio.")
+st.title("Video Transcription and Celebrity Identification")
+st.write("Upload a video to identify celebrity or transcribe audio.")
 
 # Initialize session state
 if 'celebrity' not in st.session_state:
@@ -157,8 +157,8 @@ if st.session_state.video_uploaded and st.button("Identify Celebrity in Video"):
     try:
         celebrity = process_video(st.session_state.video_path)
         if celebrity:
-            st.session_state.celebrity = celebrity
             celebrity = celebrity.replace("_"," ")
+            st.session_state.celebrity = celebrity
             st.success(f"Celebrity detected: {celebrity}")
         else:
             st.warning("No celebrity face detected.")
