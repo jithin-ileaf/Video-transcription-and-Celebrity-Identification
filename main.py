@@ -59,7 +59,7 @@ def transcribe_audio_gemini(audio_path, model="models/gemini-2.5-flash"):
     """Transcribe audio using Gemini 1.5"""
 
     model_obj = genai.GenerativeModel(model)
-
+    model = genai.GenerativeModel(model)
     # Read audio file bytes
     with open(audio_path, "rb") as f:
         audio_bytes = f.read()
@@ -71,11 +71,19 @@ def transcribe_audio_gemini(audio_path, model="models/gemini-2.5-flash"):
                 "mime_type": "audio/mp3",
                 "data": audio_bytes
             },
-            "Transcribe this audio exactly as spoken.Maintain consistent formattings for all words.Undo italicized, bolded, stylized, decorated, or modify words or characters in your output.Do NOT insert Markdown formatting such as *, _, **, or backticks unless I explicitly ask."
+            "Transcribe this audio exactly as spoken."
         ]
     )
 
-    return response.text
+    response_edited = model.generate_content(
+    [
+        {"role": "model", "parts": "You are an expert text corrector.Maintain consistent formattings for all words.Undo italicized, bolded, stylized, decorated, or modify words or characters in your output.Do NOT insert Markdown formatting such as *, _, **, or backticks unless I explicitly ask."},
+        {"role": "user", "parts": response.text},
+    ]
+    )
+
+
+    return response_edited.text
 
 
 
